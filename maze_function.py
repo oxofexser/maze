@@ -25,6 +25,7 @@ class Hero(Sprite):
         super().__init__(x, y, width, height, color, image, speed)
         self.MOVE = {'UP':False, 'DOWN': False, 'LEFT': False, 'RIGHT': False}
         self.DIRECTION = False
+        self.XP = 3
 
     def move(self, window):
         if self.MOVE['UP'] and self.y > 0:
@@ -49,7 +50,7 @@ class Hero(Sprite):
         if self.MOVE['UP'] or self.MOVE['DOWN'] or self.MOVE['LEFT'] or self.MOVE['RIGHT']:
             self.move_image()
         else:
-            self.IMAGE_NOW = self.IMAGE_LIST[0]
+            self.IMAGE = self.IMAGE_LIST[0]
         
         if self.DIRECTION:
             self.IMAGE_NOW = pygame.transform.flip(self.IMAGE, True, False)
@@ -65,7 +66,7 @@ class Bot(Sprite):
         self.horizontal = horizontal
         self.BULLET = pygame.Rect(self.x, self.y + self.height // 2, 20, 10)
 
-    def move(self, window):
+    def move(self, window, hero):
         if self.horizontal:
             self.x += self.SPEED
             if (self.collidelist(wall_list) != -1) or (self.x > 0) or (self.x + self.width > setting_win['WIDTH']):
@@ -76,14 +77,21 @@ class Bot(Sprite):
                 self.SPEED *= -1
         self.move_image()
         window.blit(self.IMAGE, (self.x, self.y))
+        self.check_hero(hero, self)
     
     def shoot(self, window, hero):
         self.BULLET.x -= self.SPEED
         if self.BULLET.collidelist(wall_list) != -1 or self.BULLET.x < 0 or self.BULLET.colliderect(hero):
+            self.check_hero(hero, self.BULLET)
             self.BULLET.x = self.x
         pygame.draw.rect(window, (255, 255, 0), self.BULLET)
         self.move_image()
         window.blit(self.IMAGE, (self.x, self.y))
+
+    def check_hero(self, hero, bot):
+        if bot.colliderect(hero):
+            hero.x, hero.y = 10, 10
+            hero.XP -= 1
         
 def create_wall(key):
     x, y = 0, 0
@@ -106,6 +114,6 @@ def create_wall(key):
         index_x = 0
         index_y += 1
         x = 0
-        y += width
+        y += width    
 
 create_wall('MAP1')

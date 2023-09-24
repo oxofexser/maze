@@ -55,8 +55,23 @@ hero_list = [
 ]
 
 bot1_list = [
-    pygame.transform.scale(pygame.image.load('image\\enemy.png'), (64, 64)),
-    pygame.transform.scale(pygame.image.load('image\\enemy.png'),(64, 64))
+    pygame.transform.scale(pygame.image.load('image\\walker.jpg'), (64, 75)),
+    pygame.transform.scale(pygame.image.load('image\\walker_1.jpg'),(64, 75)),
+    pygame.transform.scale(pygame.image.load('image\\walker_2.jpg'),(64, 75)),
+    pygame.transform.scale(pygame.image.load('image\\walker_3..jpg'),(64, 75))
 ]
+
+bot2_list = [
+    pygame.transform.scale(pygame.image.load('image\\girl_2.jpg'), (64, 75)),
+    pygame.transform.scale(pygame.image.load('image\\girl_1.jpg'), (64, 75))
+]
+
+bot2_list[0] = pygame.transform.flip(bot2_list[0], True, False)
+bot2_list[1] = pygame.transform.flip(bot2_list[1], True, False)
+
+hp_image = pygame.transform.scale(pygame.image.load('image\\hp.png'), (20, 20))
+key_image = pygame.transform.scale(pygame.image.load('image\\key.jpg'), (64, 90))
+door_image = pygame.transform.scale(pygame.image.load('image\\door_open.jpg'), (100, 150))
+
 '''pygame.image.load('image\\enemy.png'),
     pygame.image.load('image\\enemy2.png')'''
